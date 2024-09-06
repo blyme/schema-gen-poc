@@ -29,24 +29,15 @@ console.log("Generating schemas...");
 const articles = await client.getCollection("node--article", {
   queryString: "include=field_media_image.field_media_image",
 });
-const articlesSchema = jsonToZod(articles).replace(
-  "const schema",
-  "const articlesSchema"
-);
+const articlesSchema = jsonToZod(articles, "articlesSchema");
 writeSchema(articlesSchema, "src/lib/schemas/articlesSchema.ts");
 
 // Generate a schema for a media--image resource
 const mediaImage = await client.getCollection("media--image");
-const mediaImageSchema = jsonToZod(mediaImage.data[0]).replace(
-  "const schema",
-  "const mediaImageSchema"
-);
+const mediaImageSchema = jsonToZod(mediaImage.data[0], "mediaImageSchema");
 writeSchema(mediaImageSchema, "src/lib/schemas/mediaImageSchema.ts");
 
 // Generate a schema for a file resource
 const file = await client.getCollection("file--file");
-const fileSchema = jsonToZod(file.data[0]).replace(
-  "const schema",
-  "const fileSchema"
-);
+const fileSchema = jsonToZod(file.data[0], "fileSchema");
 writeSchema(fileSchema, "src/lib/schemas/fileSchema.ts");
